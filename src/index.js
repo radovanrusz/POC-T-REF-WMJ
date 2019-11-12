@@ -1,12 +1,5 @@
-const express = require('express')
-require('./db/mongoose')
-const journalRouter = require('./routers/journalrec')
-
-const app = express()
-const port = process.env.PORT || 3000
-
-app.use(express.json())
-app.use(journalRouter)
+const app = require('./app')
+const port = process.env.PORT
 
 app.listen(port, () => {
     console.log('Server is up on port ' + port)

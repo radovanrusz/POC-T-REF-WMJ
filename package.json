@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "pretest": "eslint --ignore-path .gitignore ."
+    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js",
+    "pretest": "eslint --ignore-path .gitignore .",
+    "test": "env-cmd  -f ./config/test.env jest --watch --runInBand"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +21,10 @@
     "mongoose": "^5.7.8"
   },
   "devDependencies": {
+    "env-cmd": "^10.0.1",
     "eslint": "^6.6.0",
-    "nodemon": "^1.19.4"
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.4",
+    "supertest": "^4.0.2"
   }
 }
