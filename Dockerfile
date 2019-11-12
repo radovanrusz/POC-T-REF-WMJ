@@ -14,7 +14,7 @@ COPY package.json /app/package.json
 # && mv /app/node_modules /node_modules
 
 RUN npm install 
-RUN npm ls
+#RUN npm ls
 RUN npm cache clean --force 
 RUN mv /app/node_modules /node_modules
 
