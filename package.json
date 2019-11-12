@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
+    "docker": "env-cmd -f ./config/docker.env node src/index.js",
     "dev": "env-cmd -f ./config/dev.env nodemon src/index.js",
     "pretest": "eslint --ignore-path .gitignore .",
     "test": "env-cmd  -f ./config/test.env jest --watch --runInBand"
