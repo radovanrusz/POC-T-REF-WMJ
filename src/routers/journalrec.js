@@ -2,7 +2,6 @@ const express = require('express')
 const JournalRec = require('../models/journalrec')
 const router = new express.Router()
 
-
 router.post('/journal', async (req, res) => {
     const journalrec = new JournalRec(req.body)
     try {
