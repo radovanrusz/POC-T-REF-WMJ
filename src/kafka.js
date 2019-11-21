@@ -5,7 +5,7 @@ const kafka = require('kafka-node')
 const JournalRec = require('./models/journalrec')
 
 try {
-    console.log('Kafka Consumer is booting up ... (kafkaHost:'+kafkaHost + ' kafkaTopic:' + kafkaTopic + ') kafkaHostEnv:' + kafkaHostEnv)
+    console.log('Kafka Consumer is booting up ... (ENVs: kafkaHost:'+kafkaHost + ' kafkaTopic:' + kafkaTopic + ') kafkaHostEnv:' + kafkaHostEnv)
     //const client = new kafka.KafkaClient(kafkaHost)
     const client = new kafka.KafkaClient({kafkaHost: kafkaHostEnv + ':9092'});
     const topics = [
