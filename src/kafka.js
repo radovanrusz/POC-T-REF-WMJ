@@ -23,13 +23,15 @@ try {
         fromOffset: false
     }
     
+    var mDate = new Date();
+    var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
     const consumer = new kafka.Consumer(client, topics, options)
 
     consumer.on('message', async (message) => {    
         const journalrec = new JournalRec(JSON.parse(message.value))
         try {
             await journalrec.save()
-            console.log('Journal record saved successfully')
+            console.log(mDateStr + ': Journal record saved successfully: ' + message.value)
         }catch(e) {
             console.log(e)
         }
