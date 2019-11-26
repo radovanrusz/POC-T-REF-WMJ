@@ -4,8 +4,11 @@ const kafkaTopic = process.env.KAFKA_TOPIC
 const kafka = require('kafka-node')
 const JournalRec = require('./models/journalrec')
 
+var mDate = new Date();
+var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+
 try {
-    console.log('20191122 11:27 Kafka Consumer is booting up ... (ENVs: kafkaHost:'+kafkaHost + ' kafkaTopic:' + kafkaTopic + ') kafkaHostEnv:' + kafkaHostEnv)
+    console.log(mDateStr + ': Kafka Consumer is booting up ... (ENVs: kafkaHost:'+kafkaHost + '; kafkaTopic:' + kafkaTopic + '; kafkaHostEnv:' + kafkaHostEnv + '; )')
     //const client = new kafka.KafkaClient(kafkaHost)
     //const client = new kafka.KafkaClient({kafkaHost: kafkaHostEnv + ':9092'});
     const client = new kafka.KafkaClient({kafkaHost: 'apache-kafka:9092'});
@@ -23,7 +26,6 @@ try {
         fromOffset: false
     }
     
-    var mDate = new Date();
     const consumer = new kafka.Consumer(client, topics, options)
 
     consumer.on('message', async (message) => {    
