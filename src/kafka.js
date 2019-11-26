@@ -24,21 +24,27 @@ try {
     }
     
     var mDate = new Date();
-    var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
     const consumer = new kafka.Consumer(client, topics, options)
 
     consumer.on('message', async (message) => {    
+
         const journalrec = new JournalRec(JSON.parse(message.value))
         try {
             await journalrec.save()
+            mDate = new Date();
+            var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
             console.log(mDateStr + ': Journal record saved successfully: ' + message.value)
         }catch(e) {
-            console.log(e)
+            mDate = new Date();
+            var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+            console.log(mDateStr + ': journalrec.save() error:' + e)
         }
     })
 
     consumer.on('error', (err) => {
-        console.log('error', err)
+        mDate = new Date();
+        var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+        console.log(mDateStr + ': Consumer on error' + err)
     })
 }catch(e) {
     console.log(e)
