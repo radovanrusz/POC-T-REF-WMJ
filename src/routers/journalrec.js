@@ -21,4 +21,27 @@ router.get('/journal', async (req, res) => {
     }
 })
 
+router.get('/initialJournal', async (req, res) => {
+    try {
+        const jdatas = { mvm1: 'wh2', mvm2: 'wh1', kmat: 'mat1', mnozstvi: 10, hmotnost: 10 };
+        const journalRec = new JournalRec(jdatas);
+        const journal = await journalRec.save();
+        res.json(journal);
+    } catch(e) {
+        console.error('unable to create initialData', e);
+        res.status(500).json({ error: e });
+    }
+})
+
+// test purpose
+router.get('/findJournalLowerThan100', async (req, res) => {
+    try {
+        const journal = await JournalRec.find({ hmotnost: { $lt: 100 } });
+        res.json(journal);
+    } catch(e) {
+        console.error('unable to create initialData', e);
+        res.status(500).json({ error: e });
+    }
+})
+
 module.exports = router
