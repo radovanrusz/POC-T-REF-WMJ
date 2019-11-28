@@ -57,9 +57,27 @@ router.get('/findJournal', async (req, res) => {
     const params = req && req.query;
     const { kmat = '', mvm1 = '', mvm2 = '', hmotnost = '', mnozstvi = '', limit = '' } = params;
     console.log('findJournal', params);
-    console.log(' kmat:', kmat, ' mvm1:', mvm1, ' mvm2:', mvm2, ' hmotnost:', hmotnost, ' mnozstvi:', mnozstvi, ' limit:', limit);
+    console.log(' kmat:',kmat, ' mvm1:',mvm1, ' mvm2:',mvm2, ' hmotnost:',hmotnost, ' mnozstvi:',mnozstvi, ' limit:',limit);
     try {
-        const journal = await JournalRec.find({ hmotnost: { $lt: 100 } });
+        // const findObj = {
+        //     kmat: { $eq: kmat },
+        //     // mvm1: { $eq: mvm1 },
+        //     // mvm2: { $eq: mvm2 },
+        //     // hmotnost: { $lt: hmotnost },
+        //     // mnozstvi: { $eq: mnozstvi }
+        // };
+        const findObj = {};
+        if (kmat) findObj['kmat'] = { $eq: kmat };
+        if (mvm1) findObj['mvm1'] = { $eq: mvm1 };
+        if (mvm2) findObj['mvm2'] = { $eq: mvm2 };
+        if (hmotnost) findObj['hmotnost'] = { $lt: hmotnost };
+        if (mnozstvi) findObj['mnozstvi'] = { $eq: mnozstvi };
+        let journal;
+        if (limit) {
+            journal = await JournalRec.find(findObj).limit(Number(limit));
+         } else {
+            journal = await JournalRec.find(findObj);
+         }
         res.json(journal);
     } catch(e) {
         console.error('unable to create initialData', e);
