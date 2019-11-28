@@ -4,13 +4,16 @@ const kafkaTopic = process.env.KAFKA_TOPIC
 const kafka = require('kafka-node')
 const JournalRec = require('./models/journalrec')
 
-var mDate = new Date();
-var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+let mDate = new Date();
+let mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
 
 try {
-    console.log(mDateStr + ': Kafka Consumer is booting up ... (ENVs: kafkaHost:'+kafkaHost + '; kafkaTopic:' + kafkaTopic + '; kafkaHostEnv:' + kafkaHostEnv + '; )')
-    //const client = new kafka.KafkaClient(kafkaHost)
-    //const client = new kafka.KafkaClient({kafkaHost: kafkaHostEnv + ':9092'});
+    console.log(mDateStr + ': Kafka Consumer is booting up ... (ENVs: kafkaHost:' + kafkaHost + '; kafkaTopic:' + kafkaTopic + '; kafkaHostEnv:' + kafkaHostEnv + '; )');
+    
+    /*
+     * const client = new kafka.KafkaClient(kafkaHost)
+     * const client = new kafka.KafkaClient({kafkaHost: kafkaHostEnv + ':9092'});
+     */
     const client = new kafka.KafkaClient({kafkaHost: 'apache-kafka:9092'});
     const topics = [
         {
@@ -34,18 +37,18 @@ try {
         try {
             await journalrec.save()
             mDate = new Date();
-            var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+            mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
             console.log(mDateStr + ': Journal record saved successfully: ' + message.value)
         }catch(e) {
             mDate = new Date();
-            var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+            mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
             console.log(mDateStr + ': journalrec.save() error:' + e)
         }
     })
 
     consumer.on('error', (err) => {
         mDate = new Date();
-        var mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+        mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
         console.log(mDateStr + ': Consumer on error' + err)
     })
 }catch(e) {

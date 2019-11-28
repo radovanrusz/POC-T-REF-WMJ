@@ -1,4 +1,4 @@
-// A const mongoose = require('mongoose')
+// a const mongoose = require('mongoose')
 const JournalRec = require('../../src/models/journalrec')
 
 const journalrecOne = {

@@ -259,6 +259,8 @@
         "wrap-iife": "error",
         "wrap-regex": "error",
         "yield-star-spacing": "error",
-        "yoda": "error"
+        "yoda": "error",
+        "max-len": "off",
+        "capitalized-comments": ["error", "never"]
     }
 }
