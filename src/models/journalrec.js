@@ -1,6 +1,5 @@
-const mongoose = require('mongoose')
-
-const JournalRec = mongoose.model('JournalRec', {
+const mongoose = require('mongoose');
+const journalSchema = {
     mvm1: {
         type: String,
         required: true,
@@ -26,6 +25,7 @@ const JournalRec = mongoose.model('JournalRec', {
     hmotnost: {
         type: Number
     }
-})
+};
+const JournalRec = mongoose.model('JournalRec', journalSchema);
 
-module.exports = JournalRec
+module.exports = JournalRec;
