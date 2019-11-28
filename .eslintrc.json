@@ -35,7 +35,7 @@
         ],
         "callback-return": "error",
         "camelcase": "error",
-        "capitalized-comments": "error",
+        "capitalized-comments": ["error", "never"],
         "class-methods-use-this": "error",
         "comma-dangle": "error",
         "comma-spacing": [
@@ -89,7 +89,7 @@
         "lines-between-class-members": "error",
         "max-classes-per-file": "error",
         "max-depth": "error",
-        "max-len": "error",
+        "max-len": "off",
         "max-lines": "error",
         "max-lines-per-function": "error",
         "max-nested-callbacks": "error",
@@ -259,8 +259,6 @@
         "wrap-iife": "error",
         "wrap-regex": "error",
         "yield-star-spacing": "error",
-        "yoda": "error",
-        "max-len": "off",
-        "capitalized-comments": ["error", "never"]
+        "yoda": "error"
     }
 }
