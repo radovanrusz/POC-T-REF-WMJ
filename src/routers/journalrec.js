@@ -48,7 +48,7 @@ router.get('/findJournalLowerThan100', async (req, res) => {
         const journal = await JournalRec.find({ hmotnost: { $lt: 100 } });
         res.json(journal);
     } catch(e) {
-        console.error('unable to create initialData', e);
+        console.error('unable to execute find', e);
         res.status(500).json({ error: e });
     }
 });
@@ -80,7 +80,7 @@ router.get('/findJournal', async (req, res) => {
          }
         res.json(journal);
     } catch(e) {
-        console.error('unable to create initialData', e);
+        console.error('unable to execute find', e);
         res.status(500).json({ error: e });
     }
 });
