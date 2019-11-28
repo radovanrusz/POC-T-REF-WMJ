@@ -4,14 +4,14 @@ const router = new express.Router();
 const asyncForEach = require ('../helpers/asyncForEach.helper');
 
 router.post('/journal', async (req, res) => {
-    const journalrec = new JournalRec(req.body)
+    const journalrec = new JournalRec(req.body);
     try {
-        await journalrec.save()
-        res.status(201).send(journalrec)
+        await journalrec.save();
+        res.status(201).json(journalrec);
     } catch(e) {
-        res.status(400).send(e)
+        res.status(400).json({ error: e });
     }
-})
+});
 
 router.get('/journal', async (req, res) => {
     try {
@@ -20,7 +20,7 @@ router.get('/journal', async (req, res) => {
     } catch(e) {
         res.status(500).json({ error: e });
     }
-})
+});
 
 router.get('/initialJournal', async (req, res) => {
     try {
@@ -41,9 +41,8 @@ router.get('/initialJournal', async (req, res) => {
         console.error('unable to create initialData', e);
         res.status(500).json({ error: e });
     }
-})
+});
 
-// test purpose
 router.get('/findJournalLowerThan100', async (req, res) => {
     try {
         const journal = await JournalRec.find({ hmotnost: { $lt: 100 } });
@@ -52,6 +51,16 @@ router.get('/findJournalLowerThan100', async (req, res) => {
         console.error('unable to create initialData', e);
         res.status(500).json({ error: e });
     }
-})
+});
 
-module.exports = router
+router.get('/findJournal', async (req, res) => {
+    try {
+        const journal = await JournalRec.find({ hmotnost: { $lt: 100 } });
+        res.json(journal);
+    } catch(e) {
+        console.error('unable to create initialData', e);
+        res.status(500).json({ error: e });
+    }
+});
+
+module.exports = router;
