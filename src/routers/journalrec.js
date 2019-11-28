@@ -54,6 +54,10 @@ router.get('/findJournalLowerThan100', async (req, res) => {
 });
 
 router.get('/findJournal', async (req, res) => {
+    const params = req && req.query;
+    const { kmat = '', mvm1 = '', mvm2 = '', hmotnost = '', mnozstvi = '', limit = '' } = params;
+    console.log('findJournal', params);
+    console.log(' kmat:', kmat, ' mvm1:', mvm1, ' mvm2:', mvm2, ' hmotnost:', hmotnost, ' mnozstvi:', mnozstvi, ' limit:', limit);
     try {
         const journal = await JournalRec.find({ hmotnost: { $lt: 100 } });
         res.json(journal);
