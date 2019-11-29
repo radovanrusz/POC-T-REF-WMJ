@@ -1,0 +1,30 @@
+[
+    {
+        "mvm1": "wh2",
+        "mvm2": "wh1",
+        "kmat": "mat1",
+        "mnozstvi": "10",
+        "hmotnost": "10"
+    },
+    {
+        "mvm1": "wh111",
+        "mvm2": "wh1",
+        "kmat": "mat1",
+        "mnozstvi": "2",
+        "hmotnost": "1220"
+    },
+    {
+        "mvm1": "wh222",
+        "mvm2": "wh1",
+        "kmat": "mat1",
+        "mnozstvi": "11",
+        "hmotnost": "1"
+    },
+    {
+        "mvm1": "wh221",
+        "mvm2": "wh1",
+        "kmat": "mat1",
+        "mnozstvi": "101",
+        "hmotnost": "1011"
+    }
+]
