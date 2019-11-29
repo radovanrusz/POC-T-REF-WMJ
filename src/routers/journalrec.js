@@ -77,7 +77,7 @@ router.get('/initialJournal', async (req, res) => {
 
 router.get('/initialJournalFilters', async (req, res) => {
     try {
-        res.json(mockInitialJournalFilters);
+        await res.json(mockInitialJournalFilters);
     } catch(e) {
         console.error('unable to create initialData', e);
         res.status(500).json({error: e});
