@@ -3,6 +3,7 @@ const JournalRec = require('../models/journalrec');
 const router = new express.Router();
 const asyncForEach = require('../helpers/asyncForEach.helper');
 const mockInitialJournal = require('../mockData/initialJournal.json');
+const mockInitialJournalFilters = require('../mockData/initialJournalFilters.json');
 
 router.post('/journal', async (req, res) => {
     const journalrec = new JournalRec(req.body);
@@ -68,6 +69,15 @@ router.get('/initialJournal', async (req, res) => {
         });
         const journalOk = await JournalRec.find({});
         res.json(journalOk);
+    } catch(e) {
+        console.error('unable to create initialData', e);
+        res.status(500).json({error: e});
+    }
+});
+
+router.get('/initialJournalFilters', async (req, res) => {
+    try {
+        res.json(mockInitialJournalFilters);
     } catch(e) {
         console.error('unable to create initialData', e);
         res.status(500).json({error: e});
