@@ -15,9 +15,9 @@ router.post('/journal', async (req, res) => {
 
 router.get('/journal', async (req, res) => {
     const params = req && req.query;
-    const {kmat = '', mvm1 = '', mvm2 = '', hmotnost = '', mnozstvi = '', limit = ''} = params;
+    const {kmat = '', mvm1 = '', mvm2 = '', from = '', to = '', limit = ''} = params;
     console.log('findJournal', params);
-    console.log(' kmat:', kmat, ' mvm1:', mvm1, ' mvm2:', mvm2, ' hmotnost:', hmotnost, ' mnozstvi:', mnozstvi, ' limit:', limit);
+    console.log(' kmat:', kmat, ' mvm1:', mvm1, ' mvm2:', mvm2, ' from:', from, ' to:', to, ' limit:', limit);
     try {
 
         /*
@@ -25,8 +25,8 @@ router.get('/journal', async (req, res) => {
          *    kmat: { $eq: kmat },
          *    mvm1: { $eq: mvm1 },
          *    mvm2: { $eq: mvm2 },
-         *    hmotnost: { $lt: hmotnost },
-         *    mnozstvi: { $eq: mnozstvi }
+         *    from: { $gte: from },
+         *    to: { $lte: to }
          * };
          */
         const findObj = {};
@@ -39,11 +39,11 @@ router.get('/journal', async (req, res) => {
         if (mvm2) {
             findObj.mvm2 = {$eq: mvm2};
         }
-        if (hmotnost) {
-            findObj.hmotnost = {$lt: hmotnost};
+        if (from) {
+            findObj.from = {$gte: from};
         }
-        if (mnozstvi) {
-            findObj.mnozstvi = {$eq: mnozstvi};
+        if (to) {
+            findObj.to = {$lte: to};
         }
         let journal = '';
         if (limit) {
