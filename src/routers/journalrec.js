@@ -2,6 +2,7 @@ const express = require('express');
 const JournalRec = require('../models/journalrec');
 const router = new express.Router();
 const asyncForEach = require('../helpers/asyncForEach.helper');
+const mockInitialJournal = require('../mockData/initialJournal.json');
 
 router.post('/journal', async (req, res) => {
     const journalrec = new JournalRec(req.body);
@@ -61,37 +62,7 @@ router.get('/journal', async (req, res) => {
 router.get('/initialJournal', async (req, res) => {
     try {
         await JournalRec.deleteMany();
-        const jDatas = [
-            {
-                mvm1: 'wh2',
-                mvm2: 'wh1',
-                kmat: 'mat1',
-                mnozstvi: 10,
-                hmotnost: 10
-            },
-            {
-                mvm1: 'wh1',
-                mvm2: 'wh1',
-                kmat: 'mat22',
-                mnozstvi: 1001,
-                hmotnost: 100
-            },
-            {
-                mvm1: 'wh3',
-                mvm2: 'wh2',
-                kmat: 'mat3',
-                mnozstvi: 10,
-                hmotnost: 11
-            },
-            {
-                mvm1: 'wh2',
-                mvm2: 'wh1',
-                kmat: 'mat1',
-                mnozstvi: 10,
-                hmotnost: 101
-            }
-        ];
-        await asyncForEach(jDatas, async (item) => {
+        await asyncForEach(mockInitialJournal, async (item) => {
             const journalRec = new JournalRec(item);
             await journalRec.save();
         });
