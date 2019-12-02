@@ -1,4 +1,5 @@
 const kafkaHost = process.env.KAFKA_HOST
+const kafkaPort = process.env.KAFKA_PORT
 const kafkaHostEnv = process.env.KAFKA_HOST_ENV
 const kafkaTopic = process.env.KAFKA_TOPIC
 const kafka = require('kafka-node')
@@ -10,11 +11,12 @@ let mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
 try {
     console.log(mDateStr + ': Kafka Consumer is booting up ... (ENVs: kafkaHost:' + kafkaHost + '; kafkaTopic:' + kafkaTopic + '; kafkaHostEnv:' + kafkaHostEnv + '; )');
     
-    /*
-     * const client = new kafka.KafkaClient(kafkaHost)
-     * const client = new kafka.KafkaClient({kafkaHost: kafkaHostEnv + ':9092'});
-     */
-    const client = new kafka.KafkaClient({kafkaHost: 'apache-kafka:9092'});
+
+    //const client = new kafka.KafkaClient(kafkaHost)
+    //const client = new kafka.KafkaClient({kafkaHost: kafkaHostEnv + ':9092'});
+    //const client = new kafka.KafkaClient({kafkaHost: 'apache-kafka:9092'});
+    const client = new kafka.KafkaClient({kafkaHost: kafkaHost + ':' + kafkaPort});
+    
     const topics = [
         {
             topic: kafkaTopic, 
