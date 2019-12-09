@@ -3,7 +3,8 @@ const JournalRec = require('../models/journalrec');
 const router = new express.Router();
 const asyncForEach = require('../helpers/asyncForEach.helper');
 const mockInitialJournal = require('../mockData/initialJournal.json');
-const mockInitialJournalFilters = require('../mockData/initialJournalFilters.json');
+// const mockInitialJournalFilters = require('../mockData/initialJournalFilters.json');
+const _ = require('lodash');
 
 router.post('/journal', async (req, res) => {
     const journalrec = new JournalRec(req.body);
@@ -77,7 +78,26 @@ router.get('/initialJournal', async (req, res) => {
 
 router.get('/initialJournalFilters', async (req, res) => {
     try {
-        res.json(mockInitialJournalFilters);
+        const journal = await JournalRec.find({});
+        let kmat = [];
+        let mvm1 = [];
+        let mvm2 = [];
+        journal.forEach((item) => {
+            kmat.push(item.kmat);
+            mvm1.push(item.mvm1);
+            mvm2.push(item.mvm2);
+        });
+        kmat = _.uniq(kmat).sort();
+        mvm1 = _.uniq(mvm1).sort();
+        mvm2 = _.uniq(mvm2).sort();
+        console.log('journal ', journal);
+        console.log('kmat ', kmat, ' mvm1 ', mvm1, ' mvm2 ', mvm2);
+        // res.json(mockInitialJournalFilters);
+        res.json({
+            kmat,
+            mvm1,
+            mvm2
+        });
     } catch(e) {
         console.error('unable to create initialData', e);
         res.status(500).json({error: e});
