@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const journalSchema = {
     mvm1: {
         type: String,
-        required: true,
+        required: false,
         trim: true,
         lowercase: true
     },
