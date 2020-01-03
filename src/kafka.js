@@ -16,6 +16,7 @@ try {
      * const client = new kafka.KafkaClient({kafkaHost: kafkaHostEnv + ':9092'});
      * const client = new kafka.KafkaClient({kafkaHost: 'apache-kafka:9092'});
      */
+    
     const client = new kafka.KafkaClient({kafkaHost: kafkaHost + ':' + kafkaPort});
     
     const topics = [
@@ -25,7 +26,6 @@ try {
         }
     ]
     const options = {
-        // autoCommit: true, 
         autoCommit: false, 
         fetchMaxWaitMs: 1000, 
         fetchMaxBytes: 1024 * 1024, 
@@ -34,23 +34,31 @@ try {
     }
     
     const consumer = new kafka.Consumer(client, topics, options)
-    //consumer.setOffset(kafkaTopic, 0, 0);
+    // consumer.setOffset(kafkaTopic, 0, 0);
 
+<<<<<<< HEAD
     client.on('ready', function () {
         console.log('Client ready!');
     });
 
     consumer.on('offsetOutOfRange', function (err) {
+=======
+    client.on('ready', () => {
+        console.log('Client ready!');
+    });
+
+    consumer.on('offsetOutOfRange', (err) => {
+>>>>>>> 8612aeb1ea218378688b65e8c9d0fd202d9d8fbf
         console.log('Kafka offsetOutOfRange: ' + err);
     });
     
-    consumer.on('message', async (message) => {    
+    consumer.on('message', (message) => {    
         mDate = new Date();
         mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
         console.log(mDateStr + ': consumer.on() invoked.');
         const journalrec = new JournalRec(JSON.parse(message.value))
-        journalrec.save().then(function (data) {
-            consumer.commit(function (err, dta) {
+        journalrec.save().then(() => {
+            consumer.commit((err, dta) => {
                 if (err) {
                     mDate = new Date();
                     mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
@@ -64,12 +72,15 @@ try {
             mDate = new Date();
             mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
             console.log(mDateStr + ': Journal record saved successfully: ' + message.value)
-        }).catch(function(error) {
+        }).catch((error) => {
             mDate = new Date();
             mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
-            console.log(mDateStr + ': journalrec.save() error:' + e);
+            console.log(mDateStr + ': journalrec.save() error:' + error);
         });
+<<<<<<< HEAD
       
+=======
+>>>>>>> 8612aeb1ea218378688b65e8c9d0fd202d9d8fbf
     })
 
     consumer.on('error', (err) => {
