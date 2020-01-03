@@ -16,6 +16,7 @@ try {
      * const client = new kafka.KafkaClient({kafkaHost: kafkaHostEnv + ':9092'});
      * const client = new kafka.KafkaClient({kafkaHost: 'apache-kafka:9092'});
      */
+    
     const client = new kafka.KafkaClient({kafkaHost: kafkaHost + ':' + kafkaPort});
     
     const topics = [
@@ -63,10 +64,10 @@ try {
             mDate = new Date();
             mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
             console.log(mDateStr + ': Journal record saved successfully: ' + message.value)
-        }).catch((e) => {
+        }).catch((error) => {
             mDate = new Date();
             mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
-            console.log(mDateStr + ': journalrec.save() error:' + e);
+            console.log(mDateStr + ': journalrec.save() error:' + error);
         });
     })
 
