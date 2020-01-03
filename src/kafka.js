@@ -1,6 +1,6 @@
 const kafkaHost = process.env.KAFKA_HOST
 const kafkaPort = process.env.KAFKA_PORT
-//const kafkaHostEnv = process.env.KAFKA_HOST_ENV
+// const kafkaHostEnv = process.env.KAFKA_HOST_ENV
 const kafkaTopic = process.env.KAFKA_TOPIC
 const kafka = require('kafka-node')
 const JournalRec = require('./models/journalrec')
@@ -17,6 +17,7 @@ try {
      * const client = new kafka.KafkaClient({kafkaHost: kafkaHostEnv + ':9092'});
      * const client = new kafka.KafkaClient({kafkaHost: 'apache-kafka:9092'});
      */
+    
     const client = new kafka.KafkaClient({kafkaHost: kafkaHost + ':' + kafkaPort});
     
     const topics = [
@@ -35,23 +36,23 @@ try {
     }
     
     const consumer = new kafka.Consumer(client, topics, options)
-    //consumer.setOffset(kafkaTopic, 0, 0);
+    // consumer.setOffset(kafkaTopic, 0, 0);
 
-    client.on('ready', function(){
+    client.on('ready', () => {
         console.log('Client ready!');
     });
 
-    consumer.on('offsetOutOfRange', function (err){
-        console.log("Kafka offsetOutOfRange: " + err);
+    consumer.on('offsetOutOfRange', (err) => {
+        console.log('Kafka offsetOutOfRange: ' + err);
     });
     
-    consumer.on('message', async (message) => {    
+    consumer.on('message', (message) => {    
         mDate = new Date();
         mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
         console.log(mDateStr + ': consumer.on() invoked.');
         const journalrec = new JournalRec(JSON.parse(message.value))
-        journalrec.save().then(function(data) {
-            consumer.commit(function (err, dta) {
+        journalrec.save().then(() => {
+            consumer.commit((err, dta) => {
                 if (err) {
                     mDate = new Date();
                     mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
@@ -65,21 +66,25 @@ try {
             mDate = new Date();
             mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
             console.log(mDateStr + ': Journal record saved successfully: ' + message.value)
-        }).catch(function(error) {
+        }).catch((error) => {
             mDate = new Date();
             mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
-            console.log(mDateStr + ': journalrec.save() error:' + e);
+            console.log(mDateStr + ': journalrec.save() error:' + error);
         });
-        // try {
-        //     await journalrec.save()
-        //     mDate = new Date();
-        //     mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
-        //     console.log(mDateStr + ': Journal record saved successfully: ' + message.value)
-        // }catch(e) {
-        //     mDate = new Date();
-        //     mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
-        //     console.log(mDateStr + ': journalrec.save() error:' + e)
-        // }
+        
+        /* 
+         *   try {
+         *    await journalrec.save()
+         *    mDate = new Date();
+         *    mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+         *    console.log(mDateStr + ': Journal record saved successfully: ' + message.value)
+         * }catch(e) {
+         *    mDate = new Date();
+         *    mDateStr = mDate.toString('dddd MMM yyyy h:mm:ss');
+         *    console.log(mDateStr + ': journalrec.save() error:' + e)
+         * }
+         */
+
     })
 
     consumer.on('error', (err) => {
