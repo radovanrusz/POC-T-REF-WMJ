@@ -5,7 +5,11 @@ services:
     restart: on-failure
     build: ./
     ports:
-      - "80:80"
+      - "3003:3003"
     volumes:
       - .:/app
     command: npm run docker
+networks:
+  default:
+    external:
+      name: micro_poc
