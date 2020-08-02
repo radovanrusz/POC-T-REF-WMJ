@@ -1,7 +1,13 @@
-FROM node:8.9-alpine
+#JHUSAK 20200802
+#FROM node:8.9-alpine
+FROM node
 
 RUN mkdir -p /app
 WORKDIR /app
+
+#JHUSAK 20200802 - 2 rows added
+RUN npm i npm@latest -g
+RUN npm audit
 
 #RUN npm install -g nodemon
 RUN npm config set registry https://registry.npmjs.org
